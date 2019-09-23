@@ -36,13 +36,17 @@ php artisan storage:link
 
 - Entrar na `<pasta-aonde-o-site-foi-instalado>`
 - Baixar as atualizações de código fonte usando Git (git pull ou git fetch + git merge, isso depende de como operador prefere trabalhar com Git)
-- Executar os comandos em se:
+- Executar os comandos em sequência:
 ```
 composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
 php artisan migrate --force
 php artisan docigp:sync:roles
-php artisan horizon:terminate
 ```
+- Reiniciar o Horizon
 
 #### Passos extras específicos desta aplicação
 
@@ -71,15 +75,13 @@ PUSHER_APP_CLUSTER=
 ### Comandos disponíveis
 
 ```
-alias a="php artisan"
-
-a docigp:sync:parties 
-a docigp:sync:congressmen
-a docigp:sync:departments
-a docigp:sync:roles
-a docigp:budget:generate
-a docigp:role:assign administrator afaria@alerj.rj.gov.br 
-a storage:link
+php artisan docigp:sync:parties 
+php artisan docigp:sync:congressmen
+php artisan docigp:sync:departments
+php artisan docigp:sync:roles
+php artisan docigp:budget:generate
+php artisan docigp:role:assign administrator afaria@alerj.rj.gov.br 
+php artisan storage:link
 ```
 
 ### Para debugar
@@ -93,23 +95,33 @@ a migrate:fresh -vvv --force; a docigp:sync:parties -vvv; a docigp:sync:congress
 a migrate:fresh -vvv --force; a docigp:sync:roles -vvv; a docigp:budget:generate 2019-04-01 -vvv; a docigp:budget:generate -vvv
 ```
 
+### Perfis de permissionamento
+- As permissões são guardadas em `config/roles.php` e são atualizadas a partir do comando `php artisan docigp:sync:roles`.
 
-
-### Permissões
-
-```
-Deputado (lançar / verificar / verificar o próprio lançamento / criar usuário)
-Chefe (lançar / verificar / verificar o próprio lançamento / criar usuário)
-Gestor (lançar / verificar / criar usuário)
-Assessor (visualizar)
-Lançador (lançar / editar)
-Verificador (verificar)
-
-Diretor (associar perfil de deputado / autorizar / publicar / publicar o que foi autorizado por ele / criar usuário)
-Financeiro (depositar)
-Assistente (autorizar / publicar / publicar o que foi autorizado por ele / criar usuário)
-Gestor (autorizar / publicar / criar usuário)
-Funcionário (visualizar)
-Autorizador (autorizar)
-Publicador (publicar)
-```
+#### Administrador 
+    - Todas as permissões
+#### Deputado
+    - Lançamentos
+        - Verificar
+        - Criar / Editar / Apagar
+    - Documentos
+        - Criar / Apagar
+        - Verificar
+        - Publicar
+    - Mês
+        - Fechar
+        - Porcentagem
+        - Depositar
+#### ACI
+    - Ver todos os botões
+    - Lançamentos
+        - Analisar
+        - Publicar
+    - Fornecedores
+        - Criar / Editar
+    - Documentos
+        - Analisar
+    - Mês
+        - Reabrir
+        - Analisar
+        - Publicar

@@ -2,12 +2,25 @@
 
 use App\Support\Constants;
 
+/*
+Este arquivo guarda os perfis e as permissões. Quando executado o sync:roles, todas as permissões são apagadas e renovadas para as que têm neste arquivo.
+
+grants -> perfis e permissões
+    group -> nome do perfil
+    abilities -> todas as habilidades que o perfil tem
+
+    OBS: Quando o grant é administrador, ele possui todas as habilidades e, nesse caso, as possíveis habilidades são criadas a partir dessa lista.
+
+roles -> guarda todas os possíveis perfis
+*/
+
 return [
     'grants' => [
         [
             'group' => Constants::ROLE_ADMINISTRATOR,
 
             'abilities' => [
+                //Tem que conter todas as habilidades
                 '*' => 'PODE FAZER TUDO',
 
                 'assign:chief' => 'Atribuir perfil de Chefe',
@@ -171,11 +184,11 @@ return [
     'roles' => [
         [
             'title' => 'Administrador',
-            'name' => 'administrator',
+            'name' => Constants::ROLE_ADMINISTRATOR,
         ],
         [
             'title' => 'Deputado',
-            'name' => 'congressman',
+            'name' => Constants::ROLE_CONGRESSMAN,
         ],
         [
             'title' => 'Chefe',
@@ -199,7 +212,7 @@ return [
         ],
         [
             'title' => 'ACI',
-            'name' => 'aci',
+            'name' => Constants::ROLE_ACI,
         ],
         [
             'title' => 'Assistente',

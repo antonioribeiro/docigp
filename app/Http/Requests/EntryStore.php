@@ -36,6 +36,8 @@ class EntryStore extends Request
     {
         return [
             'date' => [
+                'bail',
+                'date',
                 'required',
                 new WithinBudgetDate($this->getQueryValue('budgets')),
             ],
@@ -43,6 +45,7 @@ class EntryStore extends Request
             'object' => 'required',
             'to' => 'required',
             'cost_center_id' => [
+                'bail',
                 'required',
                 new NotRevokedCostCenter($this->get('date')),
             ],
@@ -57,11 +60,12 @@ class EntryStore extends Request
      */
     public function sanitize(array $all)
     {
-        if (isset($all['date']) && is_string($all['date'])) {
+        if (isset($all['date']) && is_br_date($all['date'])) {
             $all['date'] = Carbon::createFromFormat('d/m/Y', $all['date']);
         }
 
         if (
+            isset($all['cost_center_id']) &&
             in_array(
                 $all['cost_center_id'],
                 Constants::COST_CENTER_CREDIT_ID_ARRAY

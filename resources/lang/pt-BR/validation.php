@@ -214,5 +214,11 @@ return [
         'number' => 'número',
         'cpf_cnpj' => 'CPF/CNPJ',
         'type' => 'Tipo pessoa (PJ ou PF)',
+        //Entry
+        'provider_cpf_cnpj' => 'CPF/CNPJ',
+        'object' => 'objeto',
+        'to' => 'nome da pessoa ou razão social',
+        'entry_type_id' => 'meio',
+        'cost_center_id' => 'centro de custo',
     ],
 ];
