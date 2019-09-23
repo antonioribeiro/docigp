@@ -2,7 +2,6 @@
 
 use App\Support\Constants;
 use Carbon\Carbon;
-use Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
