@@ -2,6 +2,7 @@
 
 use App\Support\Constants;
 use Carbon\Carbon;
+use Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
@@ -321,6 +322,17 @@ function is_at_least_verbose($command)
 {
     return $command->getOutput()->getVerbosity() >=
         \Symfony\Component\Console\Output\OutputInterface::VERBOSITY_VERBOSE;
+}
+
+function is_br_date($date)
+{
+    try {
+        $date = Carbon::createFromFormat('d/m/Y', $date);
+    } catch (\InvalidArgumentException $e) {
+        //Not a date
+        return false;
+    }
+    return true;
 }
 
 class Timer
