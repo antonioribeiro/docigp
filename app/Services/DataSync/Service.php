@@ -117,6 +117,7 @@ class Service
                 );
 
                 if (in($ability, 'everything', '*')) {
+                    //If it is administrator
                     Bouncer::allow($grant['group'])->everything();
                 } else {
                     Bouncer::ability()->updateOrCreate(
